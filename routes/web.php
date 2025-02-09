@@ -14,5 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
+
+// Formulaire de création de demande
+Route::get('/store', [LeaveRequestController::class, 'create'])->name('create');
+
+// Enregistrer une nouvelle demande
+Route::post('/store', [LeaveRequestController::class, 'store'])->name('store');
