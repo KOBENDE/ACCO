@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('employes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nom');
+            $table->string('prenom');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('fonction')->nullable();
+            $table->enum('role', ['employe', 'chef_service', 'grh', 'directeur'])->default('employe');
+            $table->unsignedBigInteger('service_id')->nullable();
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('set null');
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('employes');
     }
 };
